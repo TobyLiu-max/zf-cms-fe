@@ -47,14 +47,15 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
  * use Authorized check all menu item
  */
 
-const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
-  menuList.map((item) => {
+const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] => {
+  return menuList.map((item) => {
     const localItem = {
       ...item,
       children: item.children ? menuDataRender(item.children) : undefined,
     };
     return Authorized.check(item.authority, localItem, null) as MenuDataItem;
   });
+};
 
 const defaultFooterDom = (
   <DefaultFooter

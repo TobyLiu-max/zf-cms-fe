@@ -56,6 +56,12 @@
                 component: './TableList',
               },
               {
+                name: 'visitor',
+                icon: 'UserOutlined',
+                path: '/visitor',
+                component: './Visitor',
+              },
+              {
                 component: './404',
               },
             ],

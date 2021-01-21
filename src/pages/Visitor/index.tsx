@@ -1,44 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Form, Row, Col, Input } from 'antd';
-import data from './modal/list';
+import moment from 'moment';
+import { fetchVisitorList } from '../../services/visitor';
 
 export default () => {
   const [form] = Form.useForm();
+  const [data, setData] = useState([]);
   const columns = [
     {
       title: '姓名',
       dataIndex: 'guestName',
-      key: 'guestName',
-      render: (text) => <a>{text}</a>,
-    },
-    {
-      title: '状态',
-      dataIndex: 'visitStatus',
-      key: 'visitStatus',
     },
     {
       title: '访客电话',
       dataIndex: 'mobileNumber',
-      key: 'mobileNumber',
     },
     {
       title: '来访人数',
       dataIndex: 'personNum',
-      key: 'personNum',
     },
     {
       title: '来访时间',
       dataIndex: 'visitTime',
-      key: 'visitTime',
+      render: (value: number) => moment(value).format('YYYY-MM-DD HH:mm'),
     },
     {
       title: '来访地点',
-      dataIndex: 'visitSiteInfo',
-      key: 'visitSiteInfo',
+      dataIndex: 'siteName',
     },
     {
       title: '操作',
-      key: 'action',
       render: () => (
         <>
           <Button style={{ marginRight: '10px' }}>修改</Button>
@@ -47,6 +38,15 @@ export default () => {
       ),
     },
   ];
+
+  const visitorList = async () => {
+    const data = await fetchVisitorList();
+    setData(data.data);
+  };
+
+  useEffect(() => {
+    visitorList();
+  }, []);
 
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
@@ -95,7 +95,7 @@ export default () => {
           </Col>
         </Row>
       </Form>
-      <Table columns={columns} dataSource={data.data.pageList} />
+      <Table columns={columns} dataSource={data} rowKey="_id" />
     </div>
   );
 };

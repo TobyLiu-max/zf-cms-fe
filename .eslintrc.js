@@ -5,4 +5,8 @@ module.exports = {
     page: true,
     REACT_APP_ENV: true,
   },
+  rules: {
+    'no-console': 0,
+    '@typescript-eslint/no-shadow': 0,
+  },
 };

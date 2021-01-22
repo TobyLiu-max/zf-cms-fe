@@ -8,5 +8,6 @@ module.exports = {
   rules: {
     'no-console': 0,
     '@typescript-eslint/no-shadow': 0,
+    'no-underscore-dangle': 0,
   },
 };
